@@ -87,7 +87,7 @@ namespace Demo_MG_MazeGame
             walls.Add(wall01);
 
             // add the player
-            player = new Player(Content, new Vector2(2 * CELL_WIDTH, 2 * CELL_HEIGHT));
+            player = new Player(Content, new Vector2(2 * CELL_WIDTH, 4 * CELL_HEIGHT));
             player.Active = true;
 
             // set the player's initial speed
@@ -146,35 +146,16 @@ namespace Demo_MG_MazeGame
 
                 //move player left
                 case GameAction.PlayerLeft:
-                    player.PlayerDirection = Player.Direction.Left;
-
-                    // only move player if allowed
-                    if (CanMove())
-                    {
-                        player.Position = new Vector2(player.Position.X - player.SpeedHorizontal, player.Position.Y);
-                    }
 
                     break;
 
                 // move player up
                 case GameAction.PlayerUp:
-                    player.PlayerDirection = Player.Direction.Up;
 
-                    // only move player if allowed
-                    if (CanMove())
-                    {
-                        player.Position = new Vector2(player.Position.X, player.Position.Y - player.SpeedVertical);
-                    }
                     break;
 
                 case GameAction.PlayerDown:
-                    player.PlayerDirection = Player.Direction.Down;
 
-                    // only move player if allowed
-                    if (CanMove())
-                    {
-                        player.Position = new Vector2(player.Position.X, player.Position.Y + player.SpeedVertical);
-                    }
                     break;
 
                 // quit game
@@ -291,17 +272,7 @@ namespace Demo_MG_MazeGame
             switch (player.PlayerDirection)
             {
                 case Player.Direction.Left:
-                    // set the position of the new move's rectangle
-                    newPlayerPosition.Offset(-player.SpeedHorizontal, 0);
 
-                    // test for a collision with the new move and the wall
-                    if (newPlayerPosition.Intersects(wall.BoundingRectangle))
-                    {
-                        wallCollision = true;
-
-                        // move player next to wall
-                        player.Position = new Vector2(wall.BoundingRectangle.Right, player.Position.Y);
-                    }
                     break;
 
                 case Player.Direction.Right:
@@ -319,31 +290,11 @@ namespace Demo_MG_MazeGame
                     break;
 
                 case Player.Direction.Up:
-                    // set the position of the new move's rectangle
-                    newPlayerPosition.Offset(0, -player.SpeedVertical);
 
-                    // test for a collision with the new move and the wall
-                    if (newPlayerPosition.Intersects(wall.BoundingRectangle))
-                    {
-                        wallCollision = true;
-
-                        // move player next to wall
-                        player.Position = new Vector2(player.Position.X, wall.BoundingRectangle.Bottom);
-                    }
                     break;
 
                 case Player.Direction.Down:
-                    // set the position of the new move's rectangle
-                    newPlayerPosition.Offset(0, player.SpeedVertical);
 
-                    // test for a collision with the new move and the wall
-                    if (newPlayerPosition.Intersects(wall.BoundingRectangle))
-                    {
-                        wallCollision = true;
-
-                        // move player next to wall
-                        player.Position = new Vector2(player.Position.X, wall.BoundingRectangle.Top - player.BoundingRectangle.Height);
-                    }
                     break;
 
                 default:
